@@ -17,7 +17,14 @@ function App() {
       <ToastContainer autoClose={1000} transition={Flip} />
       <Routes>
         <Route path='*' element={<NotFound />} />
-        <Route path='/' element={<Home />} />
+        <Route
+          path='/'
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
         <Route path='/basic-auth' element={<User />} />
         <Route
           path='/control'
