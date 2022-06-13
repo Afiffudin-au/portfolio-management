@@ -13,22 +13,30 @@ interface Inputs {
   urlProgLang: string
 }
 function TableItem({ urlProgLang, id, handleRefresh }: TableItemProps) {
-  const { register, handleSubmit } = useForm<Inputs>({
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty },
+  } = useForm<Inputs>({
     defaultValues: {
       urlProgLang: urlProgLang,
     },
   })
   const [edit, setEdit] = useState(false)
   const handleUpdate: SubmitHandler<Inputs> = async (data) => {
-    const idToast = toast.loading('Updating...')
-    const res = await putLanguage(data, id)
-    if (!res.error) {
-      handleToast(idToast, res)
-      setEdit(false)
-      handleRefresh?.()
+    if (isDirty) {
+      const idToast = toast.loading('Updating...')
+      const res = await putLanguage(data, id)
+      if (!res.error) {
+        handleToast(idToast, res)
+        setEdit(false)
+        handleRefresh?.()
+      } else {
+        handleToast(idToast, res)
+        setEdit(false)
+      }
     } else {
-      handleToast(idToast, res)
-      setEdit(false)
+      toast.warn('No changes')
     }
   }
   const handleDelete = async () => {

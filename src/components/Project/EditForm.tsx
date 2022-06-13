@@ -76,8 +76,6 @@ function EditForm({
         for (let i = 0; i < techTags.length; i++) {
           if (e.target.value === techTags[i]) {
             return true
-          } else {
-            return false
           }
         }
       }
@@ -98,8 +96,10 @@ function EditForm({
   }
   useEffect(() => {
     if (JSON.stringify(tech) === JSON.stringify(techTags)) {
+      console.log('Sama')
       setTechTagDirty(false)
     } else {
+      console.log('Tidak sama')
       setTechTagDirty(true)
     }
   }, [tech, techTags])
@@ -190,7 +190,7 @@ function EditForm({
           />
         </div>
         <div className='mb-6'>
-          <div className='flex items-center gap-1 mb-2'>
+          <div className='flex items-center gap-1 mb-2 flex-wrap'>
             {techTags.map((item: any, index: any) => (
               <span
                 key={item + index}

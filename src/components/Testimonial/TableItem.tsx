@@ -41,7 +41,7 @@ function TableItem({
         <td className='px-6 py-4 font-medium text-gray-900 truncate max-w-xs'>
           {imgUrl}
         </td>
-        <td className='px-6 py-4 font-medium text-gray-900 max-w-xs flex items-center justify-start gap-2'>
+        <td className='px-6 py-4 font-medium text-gray-900 max-w-xs flex items-center justify-end gap-2'>
           <button
             onClick={() => setIsOpenModal(true)}
             type='button'

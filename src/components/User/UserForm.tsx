@@ -32,7 +32,7 @@ function UserForm() {
       onSubmit={handleSubmit(handleSendForm)}>
       <div className='mb-6'>
         <label className='block mb-2 text-sm font-medium text-gray-900'>
-          Name
+          Username
         </label>
         <input
           type='text'

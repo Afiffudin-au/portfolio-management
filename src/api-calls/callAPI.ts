@@ -25,7 +25,7 @@ const callAPI = async ({ url, method, data, }:AxiosRequestConfig)=>{
   }
   const successRes = {
     error: false,
-    message: 'success',
+    message: res.data.message,
     data: res.data
   }
   return successRes

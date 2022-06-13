@@ -14,3 +14,12 @@ export const headers_auth = {
     `${api_config.USERNAME}:${api_config.PASSWORD}`
   )}`,
 }
+
+// Example : Set up basic authentication with axios at api-calls/callAPI.ts (with .env)
+/*const res = await axios({
+  method: method,
+  url: url,
+  data :data,
+  headers : headers_auth
+})
+*/

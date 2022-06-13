@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Dashboard from './components/Dashboard'
 import PrivateRoute from './routing/PrivateRoute'
 import NotFound from './components/NotFound'
+
 function App() {
   return (
     <div className='App'>

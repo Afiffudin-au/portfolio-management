@@ -1,9 +1,8 @@
 import React from 'react'
-import {
-  FcAlphabeticalSortingAz,
-  FcAlphabeticalSortingZa,
-} from 'react-icons/fc'
+import usePagenationTable from '../../hooks/usePagenationTable'
 import useTableSorting from '../../hooks/useTableSorting'
+import Pagenation from '../Pagenation'
+import SortArrow from '../ShortArrow'
 import TableItem from './TableItem'
 interface LanguageTypes {
   urlProgLang: string
@@ -16,7 +15,9 @@ function Table({
   data: any
   handleRefresh: () => void
 }) {
-  const { direction, orderData, setValueDirection } = useTableSorting(data)
+  const { handlePageClick, pageCount, pagenatedData } = usePagenationTable(data)
+  const { direction, orderData, setValueDirection, value } =
+    useTableSorting(pagenatedData)
   return (
     <div className='shadow-md sm:rounded-lg'>
       <table className='w-full text-sm text-left text-gray-500 table-auto'>
@@ -28,11 +29,7 @@ function Table({
               className='px-6 py-3 cursor-pointer'>
               <div className='font-bold flex items-center text-sm gap-1'>
                 language url
-                {direction === 'descending' ? (
-                  <FcAlphabeticalSortingAz />
-                ) : (
-                  <FcAlphabeticalSortingZa />
-                )}
+                {value === 'urlProgLang' && <SortArrow direction={direction} />}
               </div>
             </th>
             <th scope='col' className='px-6 py-3'>
@@ -51,6 +48,7 @@ function Table({
           ))}
         </tbody>
       </table>
+      <Pagenation handlePageClick={handlePageClick} pageCount={pageCount} />
     </div>
   )
 }
