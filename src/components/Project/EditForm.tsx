@@ -96,10 +96,8 @@ function EditForm({
   }
   useEffect(() => {
     if (JSON.stringify(tech) === JSON.stringify(techTags)) {
-      console.log('Sama')
       setTechTagDirty(false)
     } else {
-      console.log('Tidak sama')
       setTechTagDirty(true)
     }
   }, [tech, techTags])

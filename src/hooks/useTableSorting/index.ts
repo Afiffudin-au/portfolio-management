@@ -15,14 +15,11 @@ const useTableSorting = (data:any)=>{
   const orderData = orderBy(data, value, direction)
   const switchDirection = () => {
     if (!direction) {
-      console.log('descending')
       setDirection('descending')
     } else if (direction === 'descending') {
       setDirection('ascending')
-      console.log('ascending')
     } else {
       setDirection(null)
-      console.log('not sorted')
     }
   }
   const setValueDirection = (value:string)=>{
