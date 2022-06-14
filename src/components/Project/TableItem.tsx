@@ -41,9 +41,10 @@ function TableItem({
         <td className='px-2 py-2 font-medium text-sm text-gray-900 break-all'>
           {projectName}
         </td>
-        <td className='px-2 py-2 font-medium text-sm text-gray-900 break-all'>
-          {description}
-        </td>
+        <td
+          className='px-2 py-2 font-medium text-sm text-gray-900 break-all'
+          dangerouslySetInnerHTML={{ __html: description }}
+        />
         <td className='px-2 py-2 font-medium text-sm text-gray-900 truncate max-w-150px'>
           <a
             className='text-blue-500 underline hover:text-blue-600'

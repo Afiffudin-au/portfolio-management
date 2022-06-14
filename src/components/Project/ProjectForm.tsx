@@ -4,6 +4,7 @@ import { AiOutlineClose } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 import { postProject } from '../../api-calls/project'
 import handleToast from '../../handleToast'
+import Rte from '../RTE'
 interface Inputs {
   projectName: string
   description: string
@@ -16,13 +17,18 @@ interface Inputs {
 function ProjectForm({ handleRefresh }: { handleRefresh?: () => void }) {
   const { register, handleSubmit, reset, setValue } = useForm<Inputs>()
   const [techTags, setTechTags] = useState<any>([])
+  const [text, setText] = useState('')
   const handleSendForm: SubmitHandler<Inputs> = async (data) => {
     const dataFix = { ...data }
     delete dataFix.emptyString
+    if (!dataFix.tech) {
+      dataFix.tech = []
+    }
     const idToast = toast.loading('Adding...')
     const res = await postProject(dataFix)
     if (!res.error) {
       reset()
+      setText('')
       setTechTags([])
       handleToast(idToast, res)
       handleRefresh?.()
@@ -31,6 +37,7 @@ function ProjectForm({ handleRefresh }: { handleRefresh?: () => void }) {
     }
   }
   const handleKeyDown = (e: any) => {
+    if (e.code === 'Enter') e.preventDefault()
     if (e.key === 'Enter') {
       if (!e.target.value.trim()) return
       const isDuplicate = () => {
@@ -52,14 +59,14 @@ function ProjectForm({ handleRefresh }: { handleRefresh?: () => void }) {
     const value = techTags.filter((el: any, i: number) => i !== index)
     setValue('tech', value)
   }
-  const checkKeyDown = (e: any) => {
-    if (e.code === 'Enter') e.preventDefault()
+  const handleTrigger = (e: any) => {
+    e.preventDefault()
+    setValue('description', text)
+    handleSubmit(handleSendForm)()
   }
   return (
     <div className='my-5 border-pink-400 border-2 w-full p-2 rounded-lg'>
-      <form
-        onSubmit={handleSubmit(handleSendForm)}
-        onKeyDown={(e) => checkKeyDown(e)}>
+      <form>
         <div className='mb-6'>
           <label className='block mb-2 text-sm font-medium text-gray-900'>
             Add a Project Name
@@ -80,17 +87,7 @@ function ProjectForm({ handleRefresh }: { handleRefresh?: () => void }) {
           <label className='block mb-2 text-sm font-medium text-gray-900'>
             Add a Desc
           </label>
-          <input
-            type='text'
-            className='border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5'
-            placeholder='descriptions...'
-            {...register('description', {
-              required: true,
-              validate: (value) => {
-                return !!value.trim()
-              },
-            })}
-          />
+          <Rte setText={setText} text={text} />
         </div>
         <div className='mb-6'>
           <label className='block mb-2 text-sm font-medium text-gray-900'>
@@ -131,7 +128,7 @@ function ProjectForm({ handleRefresh }: { handleRefresh?: () => void }) {
           <input
             type='text'
             className='border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5'
-            placeholder='https://res.cloudinary.com/...'
+            placeholder='https://yourwebsite.com'
             {...register('previewLink', {
               required: true,
               validate: (value) => {
@@ -159,11 +156,12 @@ function ProjectForm({ handleRefresh }: { handleRefresh?: () => void }) {
             className='border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5'
             placeholder='[react.js] [next.js]'
             onKeyDown={handleKeyDown}
-            {...register('emptyString', {})}
+            {...register('emptyString')}
           />
         </div>
         <div className='mb-6'>
           <button
+            onClick={handleTrigger}
             type='submit'
             className='text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center '>
             Submit

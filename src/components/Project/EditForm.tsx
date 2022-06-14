@@ -4,6 +4,7 @@ import { AiOutlineClose } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 import { putProject } from '../../api-calls/project'
 import handleToast from '../../handleToast'
+import Rte from '../RTE'
 interface Inputs {
   projectName: string
   description: string
@@ -52,8 +53,9 @@ function EditForm({
   })
   const [techTags, setTechTags] = useState<any>(tech)
   const [techTagDirty, setTechTagDirty] = useState(false)
+  const [text, setText] = useState(description)
   const handleSendForm: SubmitHandler<Inputs> = async (data) => {
-    if (isDirty || techTagDirty) {
+    if (isDirty || techTagDirty || description !== text) {
       const dataFix = { ...data }
       delete dataFix.emptyString
       const idToast = toast.loading('Updating...')
@@ -70,6 +72,7 @@ function EditForm({
     }
   }
   const handleKeyDown = (e: any) => {
+    if (e.code === 'Enter') e.preventDefault()
     if (e.key === 'Enter') {
       if (!e.target.value.trim()) return
       const isDuplicate = () => {
@@ -91,8 +94,10 @@ function EditForm({
     const value = techTags.filter((el: any, i: number) => i !== index)
     setValue('tech', value)
   }
-  const checkKeyDown = (e: any) => {
-    if (e.code === 'Enter') e.preventDefault()
+  const handleTrigger = (e: any) => {
+    e.preventDefault()
+    setValue('description', text)
+    handleSubmit(handleSendForm)()
   }
   useEffect(() => {
     if (JSON.stringify(tech) === JSON.stringify(techTags)) {
@@ -104,9 +109,7 @@ function EditForm({
 
   return (
     <div className='my-5 w-full p-2 rounded-lg'>
-      <form
-        onSubmit={handleSubmit(handleSendForm)}
-        onKeyDown={(e) => checkKeyDown(e)}>
+      <form>
         <div className='mb-6'>
           <label className='block mb-2 text-sm font-medium text-gray-900'>
             Edit a Project Name
@@ -127,17 +130,7 @@ function EditForm({
           <label className='block mb-2 text-sm font-medium text-gray-900'>
             Edit a Desc
           </label>
-          <input
-            type='text'
-            className='border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5'
-            placeholder='descriptions...'
-            {...register('description', {
-              required: true,
-              validate: (value) => {
-                return !!value.trim()
-              },
-            })}
-          />
+          <Rte setText={setText} text={text} />
         </div>
         <div className='mb-6'>
           <label className='block mb-2 text-sm font-medium text-gray-900'>
@@ -211,6 +204,7 @@ function EditForm({
         </div>
         <div className='mb-6'>
           <button
+            onClick={handleTrigger}
             type='submit'
             className='text-white disabled:bg-slate-400 disabled:text-gray-300 bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center '>
             Submit
