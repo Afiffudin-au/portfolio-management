@@ -35,16 +35,20 @@ function TableItem({
       handleToast(idToast, res)
     }
   }
+
   return (
     <>
       <tr className='bg-white border-b'>
         <td className='px-2 py-2 font-medium text-sm text-gray-900 break-all'>
           {projectName}
         </td>
-        <td
-          className='px-2 py-2 font-medium text-sm text-gray-900 break-all'
-          dangerouslySetInnerHTML={{ __html: description }}
-        />
+        <td className='px-2 py-2 font-medium text-sm text-gray-900'>
+          <div
+            className='text-justify max-h-60 overflow-y-scroll'
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+        </td>
+
         <td className='px-2 py-2 font-medium text-sm text-gray-900 truncate max-w-150px'>
           <a
             className='text-blue-500 underline hover:text-blue-600'
@@ -73,7 +77,7 @@ function TableItem({
           </a>
         </td>
         <td className='px-2 py-2 font-medium text-sm text-gray-900'>
-          <div>
+          <div className='max-w-100px truncate'>
             {tech.map((item, i) => (
               <a
                 key={item + i}
