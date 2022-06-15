@@ -35,16 +35,20 @@ function TableItem({
       handleToast(idToast, res)
     }
   }
+
   return (
     <>
       <tr className='bg-white border-b'>
         <td className='px-2 py-2 font-medium text-sm text-gray-900 break-all'>
           {projectName}
         </td>
-        <td
-          className='px-2 py-2 font-medium text-sm text-gray-900 break-all'
-          dangerouslySetInnerHTML={{ __html: description }}
-        />
+        <td className='px-2 py-2 font-medium text-sm text-gray-900'>
+          <div
+            className='text-justify max-h-40 p-1 overflow-y-auto'
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+        </td>
+
         <td className='px-2 py-2 font-medium text-sm text-gray-900 truncate max-w-150px'>
           <a
             className='text-blue-500 underline hover:text-blue-600'
@@ -73,7 +77,7 @@ function TableItem({
           </a>
         </td>
         <td className='px-2 py-2 font-medium text-sm text-gray-900'>
-          <div>
+          <div className='max-w-100px truncate'>
             {tech.map((item, i) => (
               <a
                 key={item + i}
@@ -89,19 +93,21 @@ function TableItem({
             ))}
           </div>
         </td>
-        <td className='px-2 py-2 font-medium text-sm text-gray-900 flex items-center justify-start gap-2'>
-          <button
-            onClick={() => setIsOpenModal(true)}
-            type='button'
-            className='font-medium text-sm text-white bg-blue-500 py-2 px-5 rounded-sm shadow-sm'>
-            Edit
-          </button>
-          <button
-            onClick={handleDelete}
-            type='button'
-            className='font-medium text-sm text-white bg-red-500 py-2 px-5 rounded-sm shadow-sm'>
-            Delete
-          </button>
+        <td className='px-2 py-2 font-medium text-sm text-gray-900'>
+          <div className='flex gap-2'>
+            <button
+              onClick={() => setIsOpenModal(true)}
+              type='button'
+              className='font-medium text-sm text-white bg-blue-500 py-2 px-5 rounded-sm shadow-sm'>
+              Edit
+            </button>
+            <button
+              onClick={handleDelete}
+              type='button'
+              className='font-medium text-sm text-white bg-red-500 py-2 px-5 rounded-sm shadow-sm'>
+              Delete
+            </button>
+          </div>
         </td>
       </tr>
       {isOpenModal && (

@@ -1,5 +1,5 @@
 import { api_config } from '../../api-config'
-import callAPI from '../callAPI'
+import callAPI from '..'
 const url = `${api_config.BASE_URL}/${api_config.API_VERSION}/testimonials`
 export const getTestimonial = async () => {
   const res = await callAPI({
