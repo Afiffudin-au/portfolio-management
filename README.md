@@ -1,3 +1,15 @@
+This portfolio management page is where you manage topics, languages, projects and testimonials. Use ReactJS and TypeScript to build portfolio management applications. As well as using private API and github API for data calling.
+
+Demo : https://portd.tosulafiffudin.com
+
+My Portfolio : https://tosulafiffudin.com
+
+My Portfolio Github : https://github.com/Afiffudin-au/new-portfolio
+
+Portfolio API v1 : https://github.com/Afiffudin-au/portfolio-server-v1
+
+Portfolio API v2 (Recommended) :https://github.com/Afiffudin-au/portfolio-server-v2
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
