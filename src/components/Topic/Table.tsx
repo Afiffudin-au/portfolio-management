@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import usePagenationTable from '../../hooks/usePagenationTable'
 import useTableSorting from '../../hooks/useTableSorting'
 import Pagenation from '../Pagenation'
@@ -19,6 +19,16 @@ function Table({
   const { handlePageClick, pageCount, pagenatedData } = usePagenationTable(data)
   const { direction, orderData, setValueDirection, value } =
     useTableSorting(pagenatedData)
+  const memoizedOrderData = useMemo(() => {
+    return orderData?.map((item: TopicTypes) => (
+      <TableItem
+        handleRefresh={handleRefresh}
+        id={item._id}
+        urlTopic={item.urlTopic}
+        key={item._id}
+      />
+    ))
+  }, [orderData])
   return (
     <div className='shadow-md sm:rounded-lg'>
       <table className='w-full text-sm text-left text-gray-500 table-auto table-sort'>
@@ -38,16 +48,7 @@ function Table({
             </th>
           </tr>
         </thead>
-        <tbody>
-          {orderData?.map((item: TopicTypes) => (
-            <TableItem
-              handleRefresh={handleRefresh}
-              id={item._id}
-              urlTopic={item.urlTopic}
-              key={item._id}
-            />
-          ))}
-        </tbody>
+        <tbody>{memoizedOrderData}</tbody>
       </table>
       <Pagenation handlePageClick={handlePageClick} pageCount={pageCount} />
     </div>
