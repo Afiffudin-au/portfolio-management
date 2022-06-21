@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { postCheckBasicAuth } from '../../api-calls/checkBasicAuth'
 import { setCookie } from '../../cookie/authCookie'
+import handleToast from '../../handleToast'
 interface Inputs {
   username: string
   password: string
@@ -12,9 +13,11 @@ function UserForm() {
   const { register, handleSubmit, reset } = useForm<Inputs>()
   const navigate = useNavigate()
   const handleSendForm: SubmitHandler<Inputs> = async (data) => {
+    const idToast = toast.loading('Checking...')
     const res = await postCheckBasicAuth(data)
     if (!res.error) {
       if (res.data.data.found) {
+        handleToast(idToast, res)
         toast.success('authentication is correct')
         reset()
         setCookie(data)
@@ -22,7 +25,7 @@ function UserForm() {
       }
     } else {
       if (res.message) {
-        toast.error(res.message)
+        handleToast(idToast, res)
       }
     }
   }
