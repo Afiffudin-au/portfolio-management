@@ -3,7 +3,6 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { postLanguage } from '../../api-calls/language'
 import handleToast from '../../handleToast'
-import { parseLanguageUrl } from '../../lib/urlParser'
 interface Inputs {
   urlProgLang: string
 }
@@ -11,9 +10,7 @@ function LanguageForm({ handleRefresh }: { handleRefresh: () => void }) {
   const { register, handleSubmit, reset } = useForm<Inputs>()
   const handleSendForm: SubmitHandler<Inputs> = async (data) => {
     const idToast = toast.loading('Adding...')
-    const res = await postLanguage({
-      urlProgLang: parseLanguageUrl(data.urlProgLang),
-    })
+    const res = await postLanguage(data)
     if (!res.error) {
       reset()
       handleToast(idToast, res)
@@ -33,7 +30,7 @@ function LanguageForm({ handleRefresh }: { handleRefresh: () => void }) {
         <input
           type='text'
           className='border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5'
-          placeholder='https://api.github.com/repos/username/repo/languages'
+          placeholder='https://github.com/username/repo'
           {...register('urlProgLang', {
             required: true,
             validate: (value) => {

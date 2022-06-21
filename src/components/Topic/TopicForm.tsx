@@ -3,7 +3,6 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import { postTopic } from '../../api-calls/topic'
 import handleToast from '../../handleToast'
-import { parseTopicUrl } from '../../lib/urlParser'
 interface Inputs {
   urlTopic: string
 }
@@ -11,7 +10,7 @@ function TopicForm({ handleRefresh }: { handleRefresh: () => void }) {
   const { register, handleSubmit, reset } = useForm<Inputs>()
   const handleSendForm: SubmitHandler<Inputs> = async (data) => {
     const idToast = toast.loading('Adding...')
-    const res = await postTopic({ urlTopic: parseTopicUrl(data.urlTopic) })
+    const res = await postTopic(data)
     if (!res.error) {
       reset()
       handleToast(idToast, res)
@@ -31,7 +30,7 @@ function TopicForm({ handleRefresh }: { handleRefresh: () => void }) {
         <input
           type='text'
           className='border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5'
-          placeholder='https://api.github.com/repos/username/example-repo/topics'
+          placeholder='https://github.com/username/repo'
           {...register('urlTopic', {
             required: true,
             validate: (value) => {
