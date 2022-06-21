@@ -1,4 +1,4 @@
-This portfolio management page is where you manage topics, languages, projects and testimonials. Use ReactJS and TypeScript to build portfolio management applications. As well as using private API and github API for data calling.
+This portfolio management page is where you manage topics, languages, projects and testimonials. Using ReactJS and TypeScript to build portfolio management applications. As well as using private API and github API for data calling. 
 
 Demo : https://portd.tosulafiffudin.com
 
