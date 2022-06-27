@@ -5,9 +5,10 @@ import handleToast from '../../handleToast'
 const useGetSpecificData = (getDataCallback: Function) => {
   const [data, setData] = useState([])
   useEffect(() => {
+    const controller = new AbortController()
     const fetchData = async () => {
       const idToast = toast.loading('Please wait...')
-      const res = await getDataCallback()
+      const res = await getDataCallback(controller)
       if (!res.error) {
         setData(res.data.data)
         handleToast(idToast, res)
@@ -16,6 +17,9 @@ const useGetSpecificData = (getDataCallback: Function) => {
       }
     }
     fetchData()
+    return () => {
+      controller.abort();
+    };
   }, [])
   const handleRefresh = async () => {
     const idToast = toast.loading('Refreshing...')

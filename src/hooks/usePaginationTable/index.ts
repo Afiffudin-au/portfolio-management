@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 
-const usePagenationTable = (data:any[]=[])=>{
+const usePaginationTable = (data:any[]=[])=>{
   const [dataTable, setDataTable] = useState({
-    pagenatedData: [],
+    paginatedData: [],
     pageCount: 0,
     offset: 0,
     perPage: 5,
@@ -17,7 +17,7 @@ const usePagenationTable = (data:any[]=[])=>{
     setDataTable({
       ...dataTable,
       pageCount: Math.ceil(data.length / dataTable.perPage),
-      pagenatedData: slice,
+      paginatedData: slice,
     })
   }
   const handlePageClick = (e: any) => {
@@ -35,15 +35,15 @@ const usePagenationTable = (data:any[]=[])=>{
     )
     setDataTable({
       ...dataTable,
-      pagenatedData: slice,
+      paginatedData: slice,
       pageCount: Math.ceil(data.length / dataTable.perPage),
     })
   }, [data])
   return{
     handlePageClick,
-    pagenatedData : dataTable.pagenatedData,
+    paginatedData : dataTable.paginatedData,
     pageCount : dataTable.pageCount,
     currentPage : dataTable.currentPage
   }
 }
-export default usePagenationTable
+export default usePaginationTable
