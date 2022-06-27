@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
-import usePagenationTable from '../../hooks/usePagenationTable'
+import usePaginationTable from '../../hooks/usePaginationTable'
 import useTableSorting from '../../hooks/useTableSorting'
-import Pagenation from '../Pagenation'
+import Pagination from '../Pagination'
 import SortArrow from '../ShortArrow'
 import TableItem from './TableItem'
 interface ProjectTypes {
@@ -20,9 +20,9 @@ function Table({
   data: any
   handleRefresh: () => void
 }) {
-  const { handlePageClick, pageCount, pagenatedData } = usePagenationTable(data)
+  const { handlePageClick, pageCount, paginatedData } = usePaginationTable(data)
   const { direction, orderData, setValueDirection, value } =
-    useTableSorting(pagenatedData)
+    useTableSorting(paginatedData)
   const memoizedOrderData = useMemo(() => {
     return orderData?.map((item: ProjectTypes) => (
       <TableItem
@@ -86,7 +86,7 @@ function Table({
         </thead>
         <tbody>{memoizedOrderData}</tbody>
       </table>
-      <Pagenation handlePageClick={handlePageClick} pageCount={pageCount} />
+      <Pagination handlePageClick={handlePageClick} pageCount={pageCount} />
     </div>
   )
 }

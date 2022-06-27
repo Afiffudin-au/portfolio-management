@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactPaginate from 'react-paginate'
 
-function Pagenation({
+function Pagination({
   pageCount,
   handlePageClick,
 }: {
@@ -38,4 +38,4 @@ function Pagenation({
   )
 }
 
-export default Pagenation
+export default Pagination
